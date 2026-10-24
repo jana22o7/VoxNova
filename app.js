@@ -6,6 +6,7 @@
    ===================================================================== */
 
 /* ---------- 1. helpers ---------- */
+const API = "https://voxnova-3epx.onrender.com";
 const $ = (s, r = document) => r.querySelector(s);
 function el(tag, attrs = {}, ...kids) {
   const n = document.createElement(tag);
@@ -29,7 +30,7 @@ async function api(path, { method = "GET", json, form } = {}) {
   const opt = { method, headers: {} };
   if (json) { opt.body = JSON.stringify(json); opt.headers["Content-Type"] = "application/json"; }
   if (form) opt.body = form;
-  const r = await fetch(path, opt);
+  const r = await fetch("https://voxnova-3epx.onrender.com" + path, opt);
   let data = null;
   try { data = await r.json(); } catch { /* not json */ }
   if (!r.ok) {
