@@ -471,4 +471,5 @@ async def feature_weather(body: FeatureIn):
 # --------------------------------------------------------------------------
 # Frontend (must be mounted last so /api routes win)
 # --------------------------------------------------------------------------
-app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
+if FRONTEND_DIR.exists():
+    app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
