@@ -40,7 +40,7 @@ logging.basicConfig(level=logging.INFO)
 # Config
 # --------------------------------------------------------------------------
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
 STT_ENGINE = os.getenv("STT_ENGINE", "whisper").lower()
 WHISPER_MODEL = os.getenv("WHISPER_MODEL", "small")
 
@@ -471,4 +471,5 @@ async def feature_weather(body: FeatureIn):
 # --------------------------------------------------------------------------
 # Frontend (must be mounted last so /api routes win)
 # --------------------------------------------------------------------------
-app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
+if FRONTEND_DIR.exists():
+    app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
