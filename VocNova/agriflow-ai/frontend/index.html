@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AgriFlow AI with Vox Nova</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- Left: navigation -->
+  <aside class="sidebar">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true">
+        <path d="M16 29V13" stroke="#f0b429" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M16 13c0-5 3-8 8-8 0 5-3 8-8 8Z" fill="#86c06c"/>
+        <path d="M16 19c0-4-2.5-6.5-7-6.5 0 4 2.5 6.5 7 6.5Z" fill="#5f9a4c"/>
+        <path d="M6 29h20" stroke="#97a488" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span>AgriFlow AI</span>
+    </div>
+    <nav id="nav" aria-label="Main"></nav>
+    <div class="sys" id="sys" aria-live="polite">Checking server…</div>
+  </aside>
+
+  <!-- Centre: dashboard views -->
+  <main class="main">
+    <header class="topbar">
+      <div id="crumb" class="crumb"></div>
+      <div class="topbar-actions">
+        <div class="seg" role="group" aria-label="Output language">
+          <button data-lang="en" class="on">English</button>
+          <button data-lang="ta">தமிழ்</button>
+        </div>
+        <button class="btn ghost only-narrow" id="voxOpen">Vox Nova</button>
+      </div>
+    </header>
+    <section id="view" class="view" tabindex="-1"></section>
+  </main>
+
+  <!-- Right: Vox Nova AI chatbot -->
+  <aside class="vox" id="vox" data-state="idle" aria-label="Vox Nova voice assistant">
+    <div class="vox-head">
+      <div class="orb-wrap">
+        <button class="orb" id="orb" aria-label="Talk to Vox Nova"><span class="orb-core"></span></button>
+      </div>
+      <div class="vox-title">
+        <h2>Vox Nova</h2>
+        <p id="voxState">Tap the orb and ask about your crop</p>
+      </div>
+      <button class="icon-btn only-narrow" id="voxClose" aria-label="Close Vox Nova">✕</button>
+    </div>
+
+    <div class="vox-tools">
+      <label class="sel">Speak in
+        <select id="voxLang">
+          <option value="auto">Auto detect</option>
+          <option value="en">English</option>
+          <option value="ta">தமிழ்</option>
+        </select>
+      </label>
+      <label class="chk"><input type="checkbox" id="voxSpeak" checked> Voice replies</label>
+      <button class="link" id="voxReset">New chat</button>
+    </div>
+
+    <div class="chat" id="chat" aria-live="polite"></div>
+
+    <canvas id="wave" class="wave" height="44"></canvas>
+    <div class="chips" id="chips"></div>
+
+    <div class="composer">
+      <input id="voxInput" type="text" placeholder="Type or tap the mic. English, தமிழ் or Tanglish" autocomplete="off">
+      <button class="btn mic" id="micBtn" aria-label="Record voice question">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+      </button>
+      <button class="btn send" id="sendBtn">Send</button>
+    </div>
+  </aside>
+</div>
+
+<button class="fab" id="voxFab" aria-label="Open Vox Nova">
+  <span class="orb-core"></span>
+</button>
+
+<script src="/app.js"></script>
+</body>
+</html>
