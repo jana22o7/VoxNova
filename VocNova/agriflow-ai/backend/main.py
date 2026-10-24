@@ -205,7 +205,7 @@ def _whisper_transcribe(path: str, language: Optional[str]) -> str:
 async def transcribe(audio: bytes, mime: str, language: Optional[str]) -> str:
     if STT_ENGINE == "gemini":
         ai = require_ai()
-        resp = await ai.aio.models.generate_content(
+        resp = await gen(ai,
             model=GEMINI_MODEL,
             contents=[
                 types.Part.from_bytes(data=audio, mime_type=mime.split(";")[0] or "audio/webm"),
@@ -276,7 +276,7 @@ async def vox_think(session_id: str, user_text: str, context: Optional[str]) -> 
     prompt = user_text if not context else f"[Dashboard context]\n{context[:2000]}\n[/Dashboard context]\n\n{user_text}"
     contents = history + [types.Content(role="user", parts=[types.Part(text=prompt)])]
     try:
-        resp = await ai.aio.models.generate_content(
+        resp = await gen(ai,
             model=GEMINI_MODEL,
             contents=contents,
             config=types.GenerateContentConfig(
@@ -386,7 +386,7 @@ async def run_feature(task: str, user_block: str, lang: str, image: Optional[tup
         parts.append(types.Part.from_bytes(data=image[0], mime_type=image[1]))
     parts.append(f"{task}\n\n{user_block}")
     try:
-        resp = await ai.aio.models.generate_content(
+        resp = await gen(ai,
             model=GEMINI_MODEL,
             contents=parts,
             config=types.GenerateContentConfig(
