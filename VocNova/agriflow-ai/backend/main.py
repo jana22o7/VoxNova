@@ -53,7 +53,15 @@ client = genai.Client(api_key=GEMINI_API_KEY) if GEMINI_API_KEY else None
 app = FastAPI(title="AgriFlow AI + Vox Nova")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
-
+async def gen(ai, **kwargs):
+    for attempt in range(3):
+        try:
+            return await ai.aio.models.generate_content(**kwargs)
+        except Exception as e:
+            if attempt < 2 and ("503" in str(e) or "UNAVAILABLE" in str(e)):
+                await asyncio.sleep(2 * (attempt + 1))
+                continue
+            raise
 def require_ai() -> genai.Client:
     if client is None:
         raise HTTPException(503, "GEMINI_API_KEY is not set. Add it to your .env file and restart the server.")
